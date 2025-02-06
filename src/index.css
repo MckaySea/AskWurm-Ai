@@ -1,0 +1,35 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+body {
+    background-color: black;
+    color: #4ade80;
+    font-family: "VT323", monospace;
+  }
+  
+  /* Add some retro-style scanlines */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+  
+  /* Add a subtle glow effect to text */
+  .text-green-400 {
+    text-shadow: 0 0 5px rgba(74, 222, 128, 0.5);
+  }
+  
