@@ -18,7 +18,7 @@ const App = () => {
     setLoading(true);
   
     try {
-      const response = await fetch("http://localhost:5000/ask-wurm", {
+      const response = await fetch("https://askwurm-server-hu9dp.kinsta.app/ask-wurm", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
