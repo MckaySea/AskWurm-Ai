@@ -65,7 +65,15 @@ const App = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Ask this model about Wurm Online! - BETA 0.1
+          Please be very specific and ask questions about Wurm Online! - BETA 0.1
+        </motion.p>
+        <motion.p
+          className="text-sm"
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          Send Bug reports to discord: mckay_
         </motion.p>
       </header>
 
