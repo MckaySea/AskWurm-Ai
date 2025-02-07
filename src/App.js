@@ -52,7 +52,7 @@ const App = () => {
     <div className="min-h-screen bg-black text-green-400 font-mono p-4">
       <header className="text-center mb-8">
         <motion.h1
-          className="text-4xl font-bold mb-2"
+          className="text-4xl font-bold mb-2 animate-pulse"
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
