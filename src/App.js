@@ -1,22 +1,40 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import React from "react";
-import "./index.css";
+"use client"
+
+import { useState, useEffect, useRef } from "react"
+import { motion, useAnimation } from "framer-motion"
+import ReactMarkdown from "react-markdown"
+import "./index.css"
 
 const App = () => {
-  const [messages, setMessages] = useState([]);
-  const [inputMessage, setInputMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [messages, setMessages] = useState([])
+  const [inputMessage, setInputMessage] = useState("")
+  const [loading, setLoading] = useState(false)
+  const chatContainerRef = useRef(null)
+  const controls = useAnimation()
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+    }
+  }, [messages])
+
+  useEffect(() => {
+    const text = "AskWurm"
+    controls.start((i) => ({
+      opacity: 1,
+      transition: { delay: i * 0.1 },
+    }))
+  }, [controls])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (inputMessage.trim() === "") return;
-  
-    const newMessage = { text: inputMessage, sender: "user" };
-    setMessages([...messages, newMessage]);
-    setInputMessage("");
-    setLoading(true);
-  
+    e.preventDefault()
+    if (inputMessage.trim() === "") return
+
+    const newMessage = { text: inputMessage, sender: "user" }
+    setMessages([...messages, newMessage])
+    setInputMessage("")
+    setLoading(true)
+
     try {
       const response = await fetch("https://askwurm-server-hu9dp.kinsta.app/ask-wurm", {
         method: "POST",
@@ -24,40 +42,43 @@ const App = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ question: inputMessage }),
-      });
-  
-      const data = await response.json();
-  
-      if (response.status === 429) { // Rate limit response
+      })
+
+      const data = await response.json()
+
+      if (response.status === 429) {
         setMessages((prevMessages) => [
           ...prevMessages,
-          { text: "You're sending messages too fast. Try again in a few seconds.", sender: "ai" },
-        ]);
+          {
+            text:
+              "You're sending messages too fast. Try again in a few seconds.",
+            sender: "ai",
+          },
+        ])
       } else {
-        const aiResponse = { text: data.response, sender: "ai" };
-        setMessages((prevMessages) => [...prevMessages, aiResponse]);
+        const aiResponse = { text: data.response, sender: "ai" }
+        setMessages((prevMessages) => [...prevMessages, aiResponse])
       }
     } catch (error) {
-      console.error("Error fetching AI response:", error);
+      console.error("Error fetching AI response:", error)
       setMessages((prevMessages) => [
         ...prevMessages,
         { text: "Error connecting to server.", sender: "ai" },
-      ]);
+      ])
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
-  
+  }
+
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono p-4">
       <header className="text-center mb-8">
-        <motion.h1
-          className="text-4xl font-bold mb-2 animate-pulse"
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          AskWurm
+        <motion.h1 className="text-4xl font-bold mb-2">
+          {Array.from("AskWurm").map((letter, index) => (
+            <motion.span key={index} initial={{ opacity: 0 }} animate={controls} custom={index}>
+              {letter}
+            </motion.span>
+          ))}
         </motion.h1>
         <motion.p
           className="text-xl"
@@ -65,7 +86,7 @@ const App = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Please be very specific and ask questions about Wurm Online! - BETA 0.1
+          Please be very specific and ask questions about Wurm Online! - BETA 0.2
         </motion.p>
         <motion.p
           className="text-sm"
@@ -79,6 +100,7 @@ const App = () => {
 
       <main className="max-w-2xl mx-auto">
         <div
+          ref={chatContainerRef}
           id="chat-container"
           className="bg-gray-900 border-2 border-green-400 rounded-lg p-4 h-96 overflow-y-auto mb-4"
         >
@@ -95,7 +117,7 @@ const App = () => {
                   message.sender === "user" ? "bg-blue-600 text-white" : "bg-green-600 text-black"
                 }`}
               >
-                {message.text}
+                <ReactMarkdown>{message.text}</ReactMarkdown>
               </div>
             </motion.div>
           ))}
@@ -119,7 +141,7 @@ const App = () => {
         </form>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
