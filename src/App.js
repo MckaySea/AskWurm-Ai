@@ -19,7 +19,6 @@ const App = () => {
   }, [messages])
 
   useEffect(() => {
-    const text = "AskWurm"
     controls.start((i) => ({
       opacity: 1,
       transition: { delay: i * 0.1 },
