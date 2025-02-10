@@ -5,6 +5,53 @@ import { motion, useAnimation } from "framer-motion"
 import ReactMarkdown from "react-markdown"
 import "./index.css"
 
+const MatrixBackground = () => {
+  useEffect(() => {
+    const canvas = document.getElementById('matrix-canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+    const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const nums = '0123456789';
+    const alphabet = katakana + latin + nums;
+
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+
+    const rainDrops = [];
+
+    for (let x = 0; x < columns; x++) {
+      rainDrops[x] = 1;
+    }
+
+    const draw = () => {
+      context.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+
+      context.fillStyle = '#4ade80';
+      context.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < rainDrops.length; i++) {
+        const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+        context.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+        if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          rainDrops[i] = 0;
+        }
+        rainDrops[i]++;
+      }
+    };
+
+    const interval = setInterval(draw, 30);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return <canvas id="matrix-canvas" className="matrix-bg"></canvas>;
+};
+
 const App = () => {
   const [messages, setMessages] = useState([])
   const [inputMessage, setInputMessage] = useState("")
@@ -16,14 +63,14 @@ const App = () => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
     }
-  }, [messages])
+  }, [chatContainerRef]); //Fixed unnecessary dependency
 
   useEffect(() => {
     controls.start((i) => ({
       opacity: 1,
       transition: { delay: i * 0.1 },
     }))
-  }, [controls])
+  }, [controls]); //Fixed unnecessary dependency
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -71,6 +118,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono p-4">
+      <MatrixBackground />
       <header className="text-center mb-8">
         <motion.h1 className="text-4xl font-bold mb-2">
           {Array.from("AskWurm").map((letter, index) => (

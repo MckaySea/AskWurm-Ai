@@ -1,35 +1,183 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
 body {
-    background-color: black;
-    color: #4ade80;
-    font-family: "VT323", monospace;
+  background-color: black;
+  color: #4ade80;
+  font-family: "VT323", monospace;
+  overflow-x: hidden;
+}
+
+/* Enhanced retro-style scanlines */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Enhanced glow effect for text */
+.text-green-400 {
+  text-shadow: 0 0 5px rgba(74, 222, 128, 0.5), 0 0 10px rgba(74, 222, 128, 0.3), 0 0 15px rgba(74, 222, 128, 0.1);
+}
+
+/* Cool hover effect for buttons */
+button {
+  position: relative;
+  overflow: hidden;
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0)
+  );
+  transform: rotate(45deg);
+  transition: 0.3s;
+}
+
+button:hover::after {
+  top: -100%;
+  left: -100%;
+}
+
+/* Pulsating effect for the chat container */
+#chat-container {
+  animation: pulse 4s infinite;
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
   }
-  
-  /* Add some retro-style scanlines */
-  body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.15),
-      rgba(0, 0, 0, 0.15) 1px,
-      transparent 1px,
-      transparent 2px
-    );
-    pointer-events: none;
-    z-index: 9999;
+  50% {
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
   }
-  
-  /* Add a subtle glow effect to text */
-  .text-green-400 {
-    text-shadow: 0 0 5px rgba(74, 222, 128, 0.5);
+  100% {
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
   }
-  
+}
+
+/* Cool focus effect for input */
+input:focus {
+  box-shadow: 0 0 15px rgba(74, 222, 128, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Glitch effect for the title */
+h1 {
+  position: relative;
+}
+
+h1::before,
+h1::after {
+  content: "AskWurm";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+h1::before {
+  left: 2px;
+  text-shadow: -2px 0 #ff00c1;
+  animation: glitch-1 2s infinite linear alternate-reverse;
+}
+
+h1::after {
+  left: -2px;
+  text-shadow: 2px 0 #00fff9;
+  animation: glitch-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-1 {
+  0% {
+    clip: rect(20px, auto, 56px, 30px);
+  }
+  2% {
+    clip: rect(28px, auto, 24px, 30px);
+  }
+  4% {
+    clip: rect(52px, auto, 74px, 30px);
+  }
+  6% {
+    clip: rect(77px, auto, 39px, 30px);
+  }
+  8% {
+    clip: rect(65px, auto, 31px, 30px);
+  }
+  10% {
+    clip: rect(72px, auto, 39px, 30px);
+  }
+  12% {
+    clip: rect(60px, auto, 14px, 30px);
+  }
+  14% {
+    clip: rect(62px, auto, 23px, 30px);
+  }
+}
+
+@keyframes glitch-2 {
+  0% {
+    clip: rect(65px, auto, 58px, 30px);
+  }
+  2% {
+    clip: rect(82px, auto, 73px, 30px);
+  }
+  4% {
+    clip: rect(53px, auto, 22px, 30px);
+  }
+  6% {
+    clip: rect(67px, auto, 41px, 30px);
+  }
+  8% {
+    clip: rect(17px, auto, 56px, 30px);
+  }
+  10% {
+    clip: rect(29px, auto, 46px, 30px);
+  }
+  12% {
+    clip: rect(70px, auto, 34px, 30px);
+  }
+  14% {
+    clip: rect(19px, auto, 63px, 30px);
+  }
+}
+
+/* Matrix-like background effect */
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.05;
+}
+
+.matrix-column {
+  float: left;
+  font-size: 1.2em;
+  color: #4ade80;
+}
+
