@@ -138,7 +138,7 @@ const App = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Please be very specific and ask questions about Wurm Online! - BETA 0.2
+          Please be very specific and ask questions about Wurm Online! - BETA 0.3
         </motion.p>
         <motion.p
           className="text-sm"
