@@ -183,7 +183,9 @@ const App = () => {
 
         <form onSubmit={handleSubmit} className="flex mt-4">
           <div className="flex-grow flex items-center bg-gray-800 text-green-400 border-2 border-green-400 rounded-l-lg px-2">
-            <span className="text-blue-400 mr-2">User@AskWurm:~$</span>
+          <span className="text-blue-400 mr-2 hidden sm:inline">User@AskWurm:~$</span>
+<span className="text-blue-400 mr-2 sm:hidden">~$</span>
+
             <input
               type="text"
               value={inputMessage}
@@ -205,4 +207,3 @@ const App = () => {
 }
 
 export default App
-
