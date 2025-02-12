@@ -1,8 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
 
 body {
   background-color: black;
@@ -60,7 +60,7 @@ button:hover::after {
 }
 
 /* Pulsating effect for the chat container */
-#chat-container {
+.terminal-window {
   animation: pulse 4s infinite;
   box-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
 }
@@ -179,5 +179,96 @@ h1::after {
   float: left;
   font-size: 1.2em;
   color: #4ade80;
+}
+
+/* Terminal window styles */
+.terminal-window {
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 2px solid #4ade80;
+  border-radius: 10px;
+  font-family: "Courier New", monospace;
+  overflow: hidden;
+}
+
+.terminal-header {
+  background-color: #333;
+  padding: 5px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.terminal-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.terminal-button.close {
+  background-color: #ff5f56;
+}
+
+.terminal-button.minimize {
+  background-color: #ffbd2e;
+}
+
+.terminal-button.maximize {
+  background-color: #27c93f;
+}
+
+.terminal-content {
+  height: calc(100vh - 250px);
+}
+
+.terminal-content::-webkit-scrollbar {
+  width: 12px;
+}
+
+.terminal-content::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.terminal-content::-webkit-scrollbar-thumb {
+  background-color: #4ade80;
+  border-radius: 6px;
+  border: 3px solid #1a1a1a;
+}
+
+/* Blinking cursor effect */
+@keyframes blink {
+  0% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 10px;
+  height: 18px;
+  background-color: #4ade80;
+  animation: blink 1s infinite;
+  vertical-align: middle;
+}
+
+/* Input field styles */
+.terminal-input {
+  background-color: transparent;
+  border: none;
+  color: #4ade80;
+  font-family: "Courier New", monospace;
+  font-size: 16px;
+  outline: none;
+  width: 100%;
+}
+
+.terminal-input::placeholder {
+  color: #4ade80;
+  opacity: 0.5;
 }
 
